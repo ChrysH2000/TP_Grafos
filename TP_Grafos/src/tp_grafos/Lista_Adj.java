@@ -52,7 +52,7 @@ class Lista_Adj {
         }
     }
     // Implementação do método verificarAdjacencia
-    boolean verificarAdjacencia(int vertice1, int vertice2) {
+    public boolean verificarAdjacencia(int vertice1, int vertice2) {
         // Verifica se o vértice2 está na lista de adjacências do vértice1
         for (Aresta aresta : listaAdjacencia.get(vertice1)) {
             if (aresta.destino == vertice2) {
@@ -60,6 +60,20 @@ class Lista_Adj {
             }
         }
         return false;  // Vértices não adjacentes
+    }
+
+    // Método para mostrar a vizinhança de um vértice
+    public void mostrarVizinhança(int vertice) {
+        System.out.print("Vizinhança do vértice " + vertice + " (" + rotulos[vertice] + "): ");
+        boolean temVizinhos = false;
+        for (Aresta aresta : listaAdjacencia.get(vertice)) {
+            System.out.print(aresta.destino + " ");
+            temVizinhos = true;
+        }
+        if (!temVizinhos) {
+            System.out.print("Nenhum vizinho.");
+        }
+        System.out.println();
     }
 
 }

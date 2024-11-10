@@ -1,6 +1,5 @@
 package tp_grafos;
 import java.util.Scanner;
-import tp_grafos.Lista_Adj;
 
 public class Menu_Checagem {	
 	 public static void MenuChecagem(Scanner scanner, Lista_Adj grafoLista) { //Metodo a ser chamado no menu de criação
@@ -44,6 +43,9 @@ public class Menu_Checagem {
 	                
 	            case 2: //Vizinhança do vértice
 	                System.out.println("Vizinhança do vértice");
+					System.out.print("Digite o vértice que você deseja saber a vizinhança: ");
+                    int vizinhancavert = scanner.nextInt();
+					grafoLista.mostrarVizinhança(vizinhancavert);
 	                break;
 	                
 	            case 3: //Grau do vértice
