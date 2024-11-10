@@ -51,5 +51,15 @@ class Lista_Adj {
             System.out.println();
         }
     }
+    // Implementação do método verificarAdjacencia
+    boolean verificarAdjacencia(int vertice1, int vertice2) {
+        // Verifica se o vértice2 está na lista de adjacências do vértice1
+        for (Aresta aresta : listaAdjacencia.get(vertice1)) {
+            if (aresta.destino == vertice2) {
+                return true;  // Vértices adjacentes
+            }
+        }
+        return false;  // Vértices não adjacentes
+    }
 
 }

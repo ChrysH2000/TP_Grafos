@@ -1,8 +1,9 @@
 package tp_grafos;
 import java.util.Scanner;
+import tp_grafos.Lista_Adj;
 
 public class Menu_Checagem {	
-	 public static void MenuChecagem(Scanner scanner) { //Metodo a ser chamado no menu de criação
+	 public static void MenuChecagem(Scanner scanner, Lista_Adj grafoLista) { //Metodo a ser chamado no menu de criação
 	    int opcao;
 	    
 	    //Criação do menu de opções
@@ -28,7 +29,18 @@ public class Menu_Checagem {
 	        switch (opcao) {
 	            case 1: //Adjacênia entre Vértices
 	                System.out.println("Adjacênia entre Vértices");
-	                break;
+                    // Solicitar vértices ao usuário
+                    System.out.print("Digite o primeiro vértice: ");
+                    int vertice1 = scanner.nextInt();
+                    System.out.print("Digite o segundo vértice: ");
+                    int vertice2 = scanner.nextInt();
+					boolean resultado = grafoLista.verificarAdjacencia(vertice1, vertice2);
+                    if (resultado) {
+                        System.out.println("Os vértices " + vertice1 + " e " + vertice2 + " são adjacentes.");
+                    } else {
+                        System.out.println("Os vértices " + vertice1 + " e " + vertice2 + " não são adjacentes.");
+                    }
+                    break;
 	                
 	            case 2: //Vizinhança do vértice
 	                System.out.println("Vizinhança do vértice");
