@@ -89,7 +89,7 @@ public class Menu_Criacao {
                     break;
                     
                 case 6: //Exibe o menu de checagem
-                	Menu_Checagem.MenuChecagem(scanner, grafoLista);
+                	Menu_Checagem.MenuChecagem(scanner, grafoLista, grafoMatriz);
                 	break;
                     
                 case 0: //Encerra o programa

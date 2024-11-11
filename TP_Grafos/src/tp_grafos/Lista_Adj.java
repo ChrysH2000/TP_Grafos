@@ -75,5 +75,13 @@ class Lista_Adj {
         }
         System.out.println();
     }
-
+    public int grauVertice(int vertice) {
+    // Verifica se o vértice existe na lista de adjacência
+    if (!listaAdjacencia.containsKey(vertice)) {
+        System.out.println("Vértice não encontrado.");
+        return -1;
+    }
+    // Retorna o tamanho da lista de adjacências do vértice, que é o grau do vértice
+    return listaAdjacencia.get(vertice).size();
+}
 }

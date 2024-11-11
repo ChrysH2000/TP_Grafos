@@ -24,6 +24,16 @@ class Matriz_Adj {
         matriz[destino][origem] = 0; // Se for um grafo não-direcionado
     }
 
+    public int calcularGrauVertice(int vertice) {
+    int grau = 0;
+    for (int i = 0; i < matriz.length; i++) {
+        if (matriz[vertice][i] != 0) {
+            grau++;
+        }
+    }
+    return grau;
+    }
+
     //Exibição da matriz
     public void exibirGrafo() {
         for (int i = 0; i < matriz.length; i++) {
@@ -34,3 +44,4 @@ class Matriz_Adj {
         }
     }
 }
+

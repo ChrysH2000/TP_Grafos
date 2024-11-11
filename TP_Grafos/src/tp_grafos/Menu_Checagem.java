@@ -2,7 +2,7 @@ package tp_grafos;
 import java.util.Scanner;
 
 public class Menu_Checagem {	
-	 public static void MenuChecagem(Scanner scanner, Lista_Adj grafoLista) { //Metodo a ser chamado no menu de criação
+	 public static void MenuChecagem(Scanner scanner, Lista_Adj grafoLista, Matriz_Adj grafoMatriz) { //Metodo a ser chamado no menu de criação
 	    int opcao;
 	    
 	    //Criação do menu de opções
@@ -50,6 +50,23 @@ public class Menu_Checagem {
 	                
 	            case 3: //Grau do vértice
 	                System.out.println("Grau do vértice");
+				System.out.print("Digite o vértice que você deseja saber o grau: ");
+				int verticeGrau = scanner.nextInt();
+
+				System.out.println("Escolha a representação do grafo para cálculo do grau:");
+				System.out.println("1 - Lista de Adjacência");
+				System.out.println("2 - Matriz de Adjacência");
+				int escolhaRepresentacao = scanner.nextInt();
+
+				if (escolhaRepresentacao == 1) {
+					int grauLista = grafoLista.calcularGrauVertice(verticeGrau);
+					System.out.println("O grau do vértice " + verticeGrau + " na Lista de Adjacência é: " + grauLista);
+				} else if (escolhaRepresentacao == 2) {
+					int grauMatriz = grafoMatriz.calcularGrauVertice(verticeGrau);
+					System.out.println("O grau do vértice " + verticeGrau + " na Matriz de Adjacência é: " + grauMatriz);
+				} else {
+					System.out.println("Opção inválida.");
+				}
 	                break;
 	                
 	            case 4: //Grafo completo
