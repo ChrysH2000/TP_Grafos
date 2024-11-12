@@ -75,13 +75,27 @@ class Lista_Adj {
         }
         System.out.println();
     }
-    public int grauVertice(int vertice) {
-    // Verifica se o vértice existe na lista de adjacência
-    if (!listaAdjacencia.containsKey(vertice)) {
-        System.out.println("Vértice não encontrado.");
-        return -1;
+    //Método para calcular o grau do vértice
+    public int calcularGrauVertice(int vertice) {
+        if (!listaAdjacencia.containsKey(vertice)) {
+            System.out.println("Vértice não encontrado.");
+            return -1;
+        }
+        return listaAdjacencia.get(vertice).size();
     }
-    // Retorna o tamanho da lista de adjacências do vértice, que é o grau do vértice
-    return listaAdjacencia.get(vertice).size();
+
+    //Método para verificar se o grafo é completo
+    public boolean ehCompleto() {
+    int n = listaAdjacencia.size(); //Número de vértices no grafo
+
+    for (int vertice : listaAdjacencia.keySet()) {
+        //Verifica se o número de vizinhos de cada vértice é igual a n - 1
+        if (listaAdjacencia.get(vertice).size() != n - 1) {
+            return false;
+        }
+    }
+    return true;
 }
+
+   
 }

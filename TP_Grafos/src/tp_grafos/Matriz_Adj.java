@@ -24,6 +24,7 @@ class Matriz_Adj {
         matriz[destino][origem] = 0; // Se for um grafo não-direcionado
     }
 
+    //Método para calcular o grau do vértice
     public int calcularGrauVertice(int vertice) {
     int grau = 0;
     for (int i = 0; i < matriz.length; i++) {
@@ -33,6 +34,24 @@ class Matriz_Adj {
     }
     return grau;
     }
+    
+    //Método para ver se o grafo é completo
+    public boolean ehCompleto() {
+    int n = matriz.length; //Número de vértices no grafo
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            //Em um grafo completo, a diagonal principal deve ser 0 e o restante deve ser 1
+            if (i != j && matriz[i][j] != 1) {
+                return false;
+            } else if (i == j && matriz[i][j] != 0) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 
     //Exibição da matriz
     public void exibirGrafo() {

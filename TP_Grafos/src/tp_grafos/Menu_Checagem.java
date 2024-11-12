@@ -57,7 +57,7 @@ public class Menu_Checagem {
 				System.out.println("1 - Lista de Adjacência");
 				System.out.println("2 - Matriz de Adjacência");
 				int escolhaRepresentacao = scanner.nextInt();
-
+				
 				if (escolhaRepresentacao == 1) {
 					int grauLista = grafoLista.calcularGrauVertice(verticeGrau);
 					System.out.println("O grau do vértice " + verticeGrau + " na Lista de Adjacência é: " + grauLista);
@@ -66,11 +66,18 @@ public class Menu_Checagem {
 					System.out.println("O grau do vértice " + verticeGrau + " na Matriz de Adjacência é: " + grauMatriz);
 				} else {
 					System.out.println("Opção inválida.");
-				}
+				} 
+				
 	                break;
 	                
 	            case 4: //Grafo completo
 	                System.out.println("Grafo completo");
+					boolean completoLista = grafoLista.ehCompleto();
+                    System.out.println("Grafo completo (Lista de Adjacência): " + (completoLista ? "Sim" : "Não"));
+                    
+                    boolean completoMatriz = grafoMatriz.ehCompleto();
+                    System.out.println("Grafo completo (Matriz de Adjacência): " + (completoMatriz ? "Sim" : "Não"));
+
 	                break;
 	                
 	            case 5: //Grafo regular
