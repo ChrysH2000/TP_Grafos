@@ -9,6 +9,12 @@ import java.util.Map;
 class Lista_Adj {
     private Map<Integer, List<Aresta>> listaAdjacencia = new HashMap<>();
     private String[] rotulos;
+    private int[] TD;  //Tempo de descoberta
+    private int[] TT;  //Tempo de término
+    private Integer[] pai;  //Predecessor ou pai
+    private int tempo;  //Tempo global
+    
+    
     
     // Metodo construtor das arestas
     private static class Aresta {
@@ -26,6 +32,10 @@ class Lista_Adj {
         for (int i = 0; i < numVertices; i++) {
             listaAdjacencia.put(i, new ArrayList<>());
         }
+        TD = new int[numVertices];
+        TT = new int[numVertices];
+        pai = new Integer[numVertices];
+        tempo = 0;
     }
 
     //Construção da lista
@@ -96,6 +106,80 @@ class Lista_Adj {
     }
     return true;
 }
+    //Método de Busca em profundidade
+    // Inicializar e executar BP para todos os vértices ainda não visitados
+    void executarBP() {
+         tempo = 0;  // Reset do tempo global
+        for (int v : listaAdjacencia.keySet()) {
+            if (TD[v] == 0) {
+                bp(v);
+            }
+        }
+    }
+    // Algoritmo simplificado de Busca em Profundidade (BP)
+    public void bp(int v) {
+        TD[v] = ++tempo;  //Tempo de descoberta
 
-   
+        for (Aresta aresta : listaAdjacencia.get(v)) {
+            int w = aresta.destino;
+            if (TD[w] == 0) {  //Se w não foi visitado
+                pai[w] = v;
+                System.out.println("Visitar aresta {" + v + ", " + w + "} - Aresta de árvore");
+                bp(w);
+            } else if (TT[w] == 0 && w != pai[v]) {  //w é ancestral, mas não o pai
+                System.out.println("Visitar aresta {" + v + ", " + w + "} - Aresta de retorno");
+            }
+        }
+
+        TT[v] = ++tempo;  //Tempo de término
+    }
+    /*
+    //Busca em Largura
+    public void blListaAdj() {
+
+    // Inicialização
+    for (int i = 0; i < numVertices; i++) {
+        L[i] = 0;
+        nivel[i] = 0;
+        pai[i] = null;
+    }
+
+    // Percorre todos os vértices não visitados
+    for (int v = 0; v < numVertices; v++) {
+        if (L[v] == 0) {  // Encontrou uma nova raiz
+            t++;
+            L[v] = t;
+            fila[fimFila++] = v;  // Insere a raiz na fila
+
+            // Executa a busca em largura a partir da raiz `v`
+            while (inicioFila != fimFila) {
+                int verticeAtual = fila[inicioFila++]; // Remove o primeiro da fila
+
+                // Explora a vizinhança de `verticeAtual` usando a lista de adjacência
+                for (int w : listaAdjacencia[verticeAtual]) {
+                    if (L[w] == 0) { // Se o vértice `w` é visitado pela primeira vez
+                        System.out.println("Visitando aresta pai {" + rotulos[verticeAtual] + ", " + rotulos[w] + "}");
+                        pai[w] = verticeAtual;
+                        nivel[w] = nivel[verticeAtual] + 1;
+                        t++;
+                        L[w] = t;
+                        fila[fimFila++] = w; // Insere `w` na fila
+
+                    } else if (nivel[w] == nivel[verticeAtual] + 1) {
+                        System.out.println("Visitando aresta tio {" + rotulos[verticeAtual] + ", " + rotulos[w] + "}");
+
+                    } else if (nivel[w] == nivel[verticeAtual] && pai[verticeAtual] == pai[w] && L[w] > L[verticeAtual]) {
+                        System.out.println("Visitando aresta irmão {" + rotulos[verticeAtual] + ", " + rotulos[w] + "}");
+
+                    } else if (nivel[w] == nivel[verticeAtual] && pai[verticeAtual] != pai[w] && L[w] > L[verticeAtual]) {
+                        System.out.println("Visitando aresta primo {" + rotulos[verticeAtual] + ", " + rotulos[w] + "}");
+                    }
+                }
+            }
+        }
+    }
 }
+*/
+}
+   
+

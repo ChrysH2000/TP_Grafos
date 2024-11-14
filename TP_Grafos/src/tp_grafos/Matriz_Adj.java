@@ -52,7 +52,7 @@ class Matriz_Adj {
     return true;
 }
 
-
+    
     //Exibição da matriz
     public void exibirGrafo() {
         for (int i = 0; i < matriz.length; i++) {

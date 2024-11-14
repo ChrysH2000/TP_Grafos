@@ -98,11 +98,27 @@ public class Menu_Checagem {
 	                
 	            case 9: //Busca em Profundidade
 	                System.out.println("Busca em Profundidade");
+					 System.out.println("Executando busca em profundidade");
+
+					if (grafoLista != null) {
+						System.out.println("BP para Lista de Adjacência:");
+						grafoLista.executarBP();  //Chama a Busca em Profundidade para a lista de adjacência
+					} else {
+						System.out.println("Lista de adjacência não inicializada.");
+					}
 	                break;
 	                
 	            case 10: //Busca em Largura
+				/* para matriz, mas n deu certo, vou fazer para lista quando voltar de viagem
 	                System.out.println("Busca em Largura");
+					  if (grafoMatriz != null) {
+	                    System.out.println("BL para Matriz de Adjacência:");
+	                    grafoMatriz.bl();  // Chama a Busca em Largura para a matriz de adjacência
+	                } else {
+	                    System.out.println("Matriz de adjacência não inicializada.");
+	                }*/
 	                break;
+	                
 	                
 	            case 11: //Menor distancia origem x outros vértices
 	                System.out.println("Menor distancia origem x outros vértices");
