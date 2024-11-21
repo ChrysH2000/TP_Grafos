@@ -13,8 +13,30 @@ class Lista_Adj {
     private int[] TT;  //Tempo de término
     private Integer[] pai;  //Predecessor ou pai
     private int tempo;  //Tempo global
-    
-    
+
+    public void verificarTipoEuleriano() {
+        // Passo 1: Verificar se o grafo é conexo
+        if (!ehConexo()) {
+            System.out.println("Não é Euleriano, o grafo não é conexo");
+        }
+
+        // Passo 2: Contar vértices de grau ímpar
+        int verticesGrauImpar = 0;
+        for (int vertice : listaAdjacencia.keySet()) {
+            if (calcularGrauVertice(vertice) % 2 != 0) {
+                verticesGrauImpar++;
+            }
+        }
+
+        // Passo 3: Classificar o grafo
+        if (verticesGrauImpar == 0) {
+            System.out.println("Grafo Euleriano");
+        } else if (verticesGrauImpar == 2) {
+            System.out.println("Grafo Semi-Euleriano");
+        } else {
+            System.out.println("Não é Euleriano, o grafo possui mais de dois vértices com grau impar");
+        }
+    }
     
     // Metodo construtor das arestas
     private static class Aresta {
@@ -133,6 +155,35 @@ class Lista_Adj {
 
         TT[v] = ++tempo;  //Tempo de término
     }
+
+    // Método para verificar se o grafo é Euleriano, Semi-Euleriano ou Nenhum
+
+    // Método auxiliar para verificar se o grafo é conexo
+    private boolean ehConexo() {
+        // Realizar uma busca em profundidade (BP) a partir de um vértice qualquer
+        boolean[] visitado = new boolean[listaAdjacencia.size()];
+        int verticeInicial = listaAdjacencia.keySet().iterator().next(); // Pega um vértice arbitrário
+        realizarBP(verticeInicial, visitado);
+
+        // Verificar se todos os vértices foram visitados
+        for (int vertice : listaAdjacencia.keySet()) {
+            if (!visitado[vertice]) {
+                return false; // Pelo menos um vértice não foi alcançado
+            }
+        }
+        return true;
+    }
+
+    // Método auxiliar para busca em profundidade (BP)
+    private void realizarBP(int vertice, boolean[] visitado) {
+        visitado[vertice] = true;
+        for (Aresta aresta : listaAdjacencia.get(vertice)) {
+            if (!visitado[aresta.destino]) {
+                realizarBP(aresta.destino, visitado);
+            }
+        }
+    }
+
     /*
     //Busca em Largura
     public void blListaAdj() {

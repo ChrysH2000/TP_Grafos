@@ -93,7 +93,8 @@ public class Menu_Checagem {
 	                break;
 	                
 	            case 8: //Grafo euleriano
-	                System.out.println("Grafo euleriano");
+	                System.out.println("Verificação de grafo euleriano");
+					grafoLista.verificarTipoEuleriano();
 	                break;
 	                
 	            case 9: //Busca em Profundidade
