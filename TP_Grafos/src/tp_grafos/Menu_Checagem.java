@@ -121,11 +121,14 @@ public class Menu_Checagem {
 	                break;
 	                
 	                
-	            case 11: //Menor distancia origem x outros vértices
+	            case 11: //Menor distancia origem x outros vértices Dijkstra
 	                System.out.println("Menor distancia origem x outros vértices");
+					System.out.print("Escolha uma vértice: ");
+	        		int verticeorigem = scanner.nextInt();
+					grafoLista.dijkstra(verticeorigem);
 	                break;
 	                
-	            case 12: //Menor distancia todos x todos
+	            case 12: //Menor distancia todos x todos Floyd-Warshall
 	                System.out.println("Menor distancia todos x todos");
 	                break;
 	                

@@ -1,9 +1,12 @@
 package tp_grafos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 //Declaração de variáveis
 class Lista_Adj {
@@ -13,30 +16,6 @@ class Lista_Adj {
     private int[] TT;  //Tempo de término
     private Integer[] pai;  //Predecessor ou pai
     private int tempo;  //Tempo global
-
-    public void verificarTipoEuleriano() {
-        // Passo 1: Verificar se o grafo é conexo
-        if (!ehConexo()) {
-            System.out.println("Não é Euleriano, o grafo não é conexo");
-        }
-
-        // Passo 2: Contar vértices de grau ímpar
-        int verticesGrauImpar = 0;
-        for (int vertice : listaAdjacencia.keySet()) {
-            if (calcularGrauVertice(vertice) % 2 != 0) {
-                verticesGrauImpar++;
-            }
-        }
-
-        // Passo 3: Classificar o grafo
-        if (verticesGrauImpar == 0) {
-            System.out.println("Grafo Euleriano");
-        } else if (verticesGrauImpar == 2) {
-            System.out.println("Grafo Semi-Euleriano");
-        } else {
-            System.out.println("Não é Euleriano, o grafo possui mais de dois vértices com grau impar");
-        }
-    }
     
     // Metodo construtor das arestas
     private static class Aresta {
@@ -157,7 +136,29 @@ class Lista_Adj {
     }
 
     // Método para verificar se o grafo é Euleriano, Semi-Euleriano ou Nenhum
+    public void verificarTipoEuleriano() {
+        // Passo 1: Verificar se o grafo é conexo
+        if (!ehConexo()) {
+            System.out.println("Não é Euleriano, o grafo não é conexo");
+        }
 
+        // Passo 2: Contar vértices de grau ímpar
+        int verticesGrauImpar = 0;
+        for (int vertice : listaAdjacencia.keySet()) {
+            if (calcularGrauVertice(vertice) % 2 != 0) {
+                verticesGrauImpar++;
+            }
+        }
+
+        // Passo 3: Classificar o grafo
+        if (verticesGrauImpar == 0) {
+            System.out.println("Grafo Euleriano");
+        } else if (verticesGrauImpar == 2) {
+            System.out.println("Grafo Semi-Euleriano");
+        } else {
+            System.out.println("Não é Euleriano, o grafo possui mais de dois vértices com grau impar");
+        }
+    }
     // Método auxiliar para verificar se o grafo é conexo
     private boolean ehConexo() {
         // Realizar uma busca em profundidade (BP) a partir de um vértice qualquer
@@ -184,6 +185,50 @@ class Lista_Adj {
         }
     }
 
+    // Método para realizar a busca de menor caminho da origem para todos Dijkstra
+    public void dijkstra(int origem) {
+        int numVertices = listaAdjacencia.size();
+        int[] distancias = new int[numVertices]; // Array de distâncias
+        boolean[] visitados = new boolean[numVertices]; // Array de visitados
+    
+        // Inicializar distâncias com infinito e visitados como false
+        Arrays.fill(distancias, Integer.MAX_VALUE);
+        distancias[origem] = 0; // Distância da origem para ela mesma é 0
+    
+        // Fila de prioridade para selecionar o próximo vértice com a menor distância
+        PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
+        pq.add(new int[]{origem, 0}); // {vértice, distância}
+    
+        while (!pq.isEmpty()) {
+            int[] atual = pq.poll();
+            int verticeAtual = atual[0];
+            int distanciaAtual = atual[1];
+    
+            if (visitados[verticeAtual]) continue;
+            visitados[verticeAtual] = true;
+    
+            // Iterar sobre os vizinhos do vértice atual
+            for (Aresta aresta : listaAdjacencia.get(verticeAtual)) {
+                int vizinho = aresta.destino;
+                int peso = aresta.peso;
+    
+                if (!visitados[vizinho] && distancias[verticeAtual] + peso < distancias[vizinho]) {
+                    distancias[vizinho] = distancias[verticeAtual] + peso;
+                    pq.add(new int[]{vizinho, distancias[vizinho]});
+                }
+            }
+        }
+    
+        // Mostrar as distâncias na tela
+        System.out.println("Distâncias a partir do vértice " + origem + ":");
+        for (int i = 0; i < distancias.length; i++) {
+            if (distancias[i] == Integer.MAX_VALUE) {
+                System.out.println("Vértice " + i + ": Inacessível");
+            } else {
+                System.out.println("Vértice " + i + ": " + distancias[i]);
+            }
+        }
+    }
     /*
     //Busca em Largura
     public void blListaAdj() {
