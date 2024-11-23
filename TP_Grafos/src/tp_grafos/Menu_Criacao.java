@@ -12,7 +12,7 @@ public class Menu_Criacao {
 
         Matriz_Adj grafoMatriz = new Matriz_Adj(numVertices);
         Lista_Adj grafoLista = new Lista_Adj(numVertices);
-
+        
         //Estabelecendo as opções
         int opcao;
         do {

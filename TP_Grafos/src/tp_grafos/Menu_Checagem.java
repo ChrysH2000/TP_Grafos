@@ -110,14 +110,10 @@ public class Menu_Checagem {
 	                break;
 	                
 	            case 10: //Busca em Largura
-				/* para matriz, mas n deu certo, vou fazer para lista quando voltar de viagem
-	                System.out.println("Busca em Largura");
-					  if (grafoMatriz != null) {
-	                    System.out.println("BL para Matriz de Adjacência:");
-	                    grafoMatriz.bl();  // Chama a Busca em Largura para a matriz de adjacência
-	                } else {
-	                    System.out.println("Matriz de adjacência não inicializada.");
-	                }*/
+				System.out.println("Busca em Largura");
+    			System.out.print("Digite o vértice inicial para a busca em largura: ");
+    			int verticeInicial = scanner.nextInt();
+    			grafoLista.bl(verticeInicial);  // Chama o método de Busca em Largura para a lista de adjacência
 	                break;
 	                
 	                

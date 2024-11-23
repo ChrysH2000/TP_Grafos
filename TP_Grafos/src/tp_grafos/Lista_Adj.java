@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.LinkedList;
+import java.util.Queue;
 
 //Declaração de variáveis
 class Lista_Adj {
@@ -229,53 +231,49 @@ class Lista_Adj {
             }
         }
     }
-    /*
+    
     //Busca em Largura
-    public void blListaAdj() {
+    public void bl(int verticeInicial) {
+    int numVertices = listaAdjacencia.size();
+    int[] nivel = new int[numVertices];
+    Integer[] pai = new Integer[numVertices];
+    int[] L = new int[numVertices];  // Marcadores de tempo ou ordem de descoberta
+    boolean[] visitado = new boolean[numVertices];
+    int t = 1;
 
-    // Inicialização
-    for (int i = 0; i < numVertices; i++) {
-        L[i] = 0;
-        nivel[i] = 0;
-        pai[i] = null;
-    }
+    Queue<Integer> fila = new LinkedList<>();
+    L[verticeInicial] = t++;
+    nivel[verticeInicial] = 0;
+    fila.add(verticeInicial);
 
-    // Percorre todos os vértices não visitados
-    for (int v = 0; v < numVertices; v++) {
-        if (L[v] == 0) {  // Encontrou uma nova raiz
-            t++;
-            L[v] = t;
-            fila[fimFila++] = v;  // Insere a raiz na fila
+    System.out.println("Iniciando a Busca em Largura a partir do vértice " + verticeInicial + ":");
 
-            // Executa a busca em largura a partir da raiz `v`
-            while (inicioFila != fimFila) {
-                int verticeAtual = fila[inicioFila++]; // Remove o primeiro da fila
+    while (!fila.isEmpty()) {
+        int verticeAtual = fila.remove();  // Remove o primeiro elemento da fila
+        System.out.println("Vértice atual: " + verticeAtual + " (Nível: " + nivel[verticeAtual] + ")");
 
-                // Explora a vizinhança de `verticeAtual` usando a lista de adjacência
-                for (int w : listaAdjacencia[verticeAtual]) {
-                    if (L[w] == 0) { // Se o vértice `w` é visitado pela primeira vez
-                        System.out.println("Visitando aresta pai {" + rotulos[verticeAtual] + ", " + rotulos[w] + "}");
-                        pai[w] = verticeAtual;
-                        nivel[w] = nivel[verticeAtual] + 1;
-                        t++;
-                        L[w] = t;
-                        fila[fimFila++] = w; // Insere `w` na fila
+        for (Aresta aresta : listaAdjacencia.get(verticeAtual)) {
+            int vizinho = aresta.destino;
 
-                    } else if (nivel[w] == nivel[verticeAtual] + 1) {
-                        System.out.println("Visitando aresta tio {" + rotulos[verticeAtual] + ", " + rotulos[w] + "}");
-
-                    } else if (nivel[w] == nivel[verticeAtual] && pai[verticeAtual] == pai[w] && L[w] > L[verticeAtual]) {
-                        System.out.println("Visitando aresta irmão {" + rotulos[verticeAtual] + ", " + rotulos[w] + "}");
-
-                    } else if (nivel[w] == nivel[verticeAtual] && pai[verticeAtual] != pai[w] && L[w] > L[verticeAtual]) {
-                        System.out.println("Visitando aresta primo {" + rotulos[verticeAtual] + ", " + rotulos[w] + "}");
-                    }
-                }
+            if (L[vizinho] == 0) {  // Primeira vez que visitamos o vértice
+                pai[vizinho] = verticeAtual;
+                nivel[vizinho] = nivel[verticeAtual] + 1;
+                L[vizinho] = t++;
+                fila.add(vizinho);
+                System.out.println("Visitando aresta pai {" + verticeAtual + ", " + vizinho + "} (Nível: " + nivel[vizinho] + ")");
+            
+            } else if (nivel[vizinho] == nivel[verticeAtual] + 1) {
+                System.out.println("Visitando aresta tio {" + verticeAtual + ", " + vizinho + "}");
+                
+            } else if (nivel[vizinho] == nivel[verticeAtual] && pai[verticeAtual] == pai[vizinho] && L[vizinho] > L[verticeAtual]) {
+                System.out.println("Visitando aresta irmão {" + verticeAtual + ", " + vizinho + "}");
+                
+            } else if (nivel[vizinho] == nivel[verticeAtual] && pai[verticeAtual] != pai[vizinho] && L[vizinho] > L[verticeAtual]) {
+                System.out.println("Visitando aresta primo {" + verticeAtual + ", " + vizinho + "}");
             }
         }
     }
 }
-*/
 }
    
 
