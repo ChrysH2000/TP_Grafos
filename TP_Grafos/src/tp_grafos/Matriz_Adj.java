@@ -133,7 +133,44 @@ class Matriz_Adj {
                 System.out.println();
             }
         }
-
+        public boolean ehAciclico() {
+            int numVertices = matriz.length;
+            boolean[] visitado = new boolean[numVertices];
+            boolean[] emRecursao = new boolean[numVertices];
+        
+            // Verificar cada componente conectado do grafo
+            for (int i = 0; i < numVertices; i++) {
+                if (!visitado[i]) {
+                    if (dfsDetectarCiclo(i, visitado, emRecursao, -1)) {
+                        return false; // Se um ciclo for detectado, o grafo não é acíclico
+                    }
+                }
+            }
+            return true; // Se nenhum ciclo for encontrado, o grafo é acíclico
+        }
+        
+        // Método auxiliar para detectar ciclos usando DFS
+        private boolean dfsDetectarCiclo(int vertice, boolean[] visitado, boolean[] emRecursao, int pai) {
+            visitado[vertice] = true;
+            emRecursao[vertice] = true;
+        
+            for (int i = 0; i < matriz.length; i++) {
+                if (matriz[vertice][i] != 0) { // Existe uma aresta entre `vertice` e `i`
+                    if (!visitado[i]) { // Se o vértice ainda não foi visitado
+                        if (dfsDetectarCiclo(i, visitado, emRecursao, vertice)) {
+                            return true; // Ciclo detectado
+                        }
+                    } else if (emRecursao[i] && i != pai) {
+                        // Vértice já visitado e não é o pai -> ciclo detectado
+                        return true;
+                    }
+                }
+            }
+        
+            emRecursao[vertice] = false; // Remover o vértice da pilha de recursão
+            return false;
+        }
+        
     
     //Exibição da matriz
     public void exibirGrafo() {

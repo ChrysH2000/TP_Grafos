@@ -110,6 +110,20 @@ public class Menu_Checagem {
 	                
 	            case 7: //Grafo acíclico
 	                System.out.println("Grafo acíclico");
+					if (grafoLista != null) {
+						boolean aciclicoLista = grafoLista.ehAciclico();
+						System.out.println("O grafo é acíclico (Lista de Adjacência): " + (aciclicoLista ? "Sim" : "Não"));
+					} else {
+						System.out.println("Lista de Adjacência não inicializada.");
+					}
+				
+					// Verificar na Matriz de Adjacência
+					if (grafoMatriz != null) {
+						boolean aciclicoMatriz = grafoMatriz.ehAciclico();
+						System.out.println("O grafo é acíclico (Matriz de Adjacência): " + (aciclicoMatriz ? "Sim" : "Não"));
+					} else {
+						System.out.println("Matriz de Adjacência não inicializada.");
+					}
 	                break;
 	                
 	            case 8: //Grafo euleriano

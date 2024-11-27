@@ -291,6 +291,43 @@ public boolean ehRegular() {
 
     return true; // Todos os vértices possuem o mesmo grau
 }
+// Método para verificar se o grafo é acíclico
+public boolean ehAciclico() {
+    boolean[] visitado = new boolean[listaAdjacencia.size()];
+    boolean[] emRecursao = new boolean[listaAdjacencia.size()];
+
+    for (int vertice : listaAdjacencia.keySet()) {
+        if (!visitado[vertice]) {
+            if (dfsDetectarCiclo(vertice, -1, visitado, emRecursao)) {
+                return false; // Ciclo encontrado
+            }
+        }
+    }
+    return true; // Não há ciclos
+}
+
+// Método auxiliar para detectar ciclos usando DFS
+private boolean dfsDetectarCiclo(int vertice, int pai, boolean[] visitado, boolean[] emRecursao) {
+    visitado[vertice] = true;
+    emRecursao[vertice] = true;
+
+    for (Aresta aresta : listaAdjacencia.get(vertice)) {
+        int vizinho = aresta.destino;
+
+        if (!visitado[vizinho]) {
+            if (dfsDetectarCiclo(vizinho, vertice, visitado, emRecursao)) {
+                return true; // Ciclo detectado
+            }
+        } else if (emRecursao[vizinho] && vizinho != pai) {
+            return true; // Aresta de retorno detectada (ciclo)
+        }
+    }
+
+    emRecursao[vertice] = false; // Remove o vértice da pilha de recursão
+    return false;
+}
+
+
 
 }
 
