@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
-import java.util.LinkedList;
 import java.util.Queue;
 
 //Declaração de variáveis
@@ -162,7 +162,7 @@ class Lista_Adj {
         }
     }
     // Método auxiliar para verificar se o grafo é conexo
-    private boolean ehConexo() {
+    public boolean ehConexo() {
         // Realizar uma busca em profundidade (BP) a partir de um vértice qualquer
         boolean[] visitado = new boolean[listaAdjacencia.size()];
         int verticeInicial = listaAdjacencia.keySet().iterator().next(); // Pega um vértice arbitrário
@@ -274,6 +274,23 @@ class Lista_Adj {
         }
     }
 }
+public boolean ehRegular() {
+    if (listaAdjacencia.isEmpty()) {
+        throw new IllegalStateException("O grafo está vazio.");
+    }
+
+    // Obtém o grau do primeiro vértice como referência
+    int grauReferencia = calcularGrauVertice(0);
+
+    // Verifica se todos os vértices possuem o mesmo grau
+    for (int vertice : listaAdjacencia.keySet()) {
+        if (calcularGrauVertice(vertice) != grauReferencia) {
+            return false; // Grau diferente encontrado, não é regular
+        }
+    }
+
+    return true; // Todos os vértices possuem o mesmo grau
 }
-   
+
+}
 

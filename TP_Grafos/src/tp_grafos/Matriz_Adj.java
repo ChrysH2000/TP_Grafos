@@ -50,7 +50,89 @@ class Matriz_Adj {
         }
     }
     return true;
-}
+    }
+
+    public boolean verificarConexidadeMatriz() {
+        int numVertices = matriz.length;
+        boolean[] visitado = new boolean[numVertices];
+        
+        // Realizar a busca em profundidade a partir do primeiro vértice
+        realizarBP_Matriz(0, visitado);
+        
+        // Verificar se todos os vértices foram visitados
+        for (boolean foiVisitado : visitado) {
+            if (!foiVisitado) {
+                return false; // Pelo menos um vértice não foi alcançado
+            }
+        }
+        return true; // Todos os vértices foram alcançados
+    }
+    
+    // Método auxiliar de BP para matriz de adjacência
+    private void realizarBP_Matriz(int vertice, boolean[] visitado) {
+        visitado[vertice] = true;
+        
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[vertice][i] != 0 && !visitado[i]) { // Existe uma aresta e ainda não foi visitado
+                realizarBP_Matriz(i, visitado);
+            }
+        }
+    }
+    
+    // Método para verificar se o grafo é regular
+    public boolean ehRegular() {
+    int grauPadrao = calcularGrauVertice(0); // Grau do primeiro vértice como referência
+
+    for (int i = 1; i < matriz.length; i++) {
+        if (calcularGrauVertice(i) != grauPadrao) {
+            return false; // Se algum vértice tiver grau diferente, o grafo não é regular
+        }
+    }
+    return true; // Todos os vértices têm o mesmo grau
+    }
+        public void floydWarshall() {
+            int numVertices = matriz.length;
+            int[][] dist = new int[numVertices][numVertices];
+
+            // Inicializar a matriz de distâncias com os pesos das arestas ou infinito
+            for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                if (i == j) {
+                    dist[i][j] = 0; // Distância de um vértice para ele mesmo é 0
+                } else if (matriz[i][j] != 0) {
+                    dist[i][j] = matriz[i][j]; // Peso da aresta
+                } else {
+                    dist[i][j] = Integer.MAX_VALUE; // Infinito (não há aresta)
+                }
+            }
+            }
+
+        // Algoritmo de Floyd-Warshall
+        for (int k = 0; k < numVertices; k++) {
+            for (int i = 0; i < numVertices; i++) {
+                for (int j = 0; j < numVertices; j++) {
+                    // Evitar soma com infinito para evitar overflow
+                    if (dist[i][k] != Integer.MAX_VALUE && dist[k][j] != Integer.MAX_VALUE 
+                        && dist[i][k] + dist[k][j] < dist[i][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                    }
+                }
+            }
+        }
+
+        // Exibir a matriz de distâncias
+        System.out.println("Matriz de menores distâncias (Floyd-Warshall):");
+            for (int i = 0; i < numVertices; i++) {
+                for (int j = 0; j < numVertices; j++) {
+                    if (dist[i][j] == Integer.MAX_VALUE) {
+                        System.out.print("INF "); // Imprimir infinito
+                    } else {
+                    System.out.print(dist[i][j] + " ");
+                    }
+                }
+                System.out.println();
+            }
+        }
 
     
     //Exibição da matriz

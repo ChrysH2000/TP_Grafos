@@ -82,10 +82,30 @@ public class Menu_Checagem {
 	                
 	            case 5: //Grafo regular
 	                System.out.println("Grafo regular");
+					boolean regularLista = grafoLista.ehRegular();
+					System.out.println("Grafo regular (Lista de Adjacência): " + (regularLista ? "Sim" : "Não"));
+
+					boolean regularMatriz = grafoMatriz.ehRegular();
+    				System.out.println("Grafo regular (Matriz de Adjacência): " + (regularMatriz ? "Sim" : "Não"));
 	                break;
 	                
 	            case 6: //Grafo conexo
 	                System.out.println("Grafo conexo");
+					// Verificar para Lista de Adjacência
+					if (grafoLista != null) {
+						boolean conexoLista = grafoLista.ehConexo(); 
+						System.out.println("Grafo conexo (Lista de Adjacência): " + (conexoLista ? "Sim" : "Não"));
+					} else {
+						System.out.println("Lista de Adjacência não inicializada.");
+					}
+			
+					// Verificar para Matriz de Adjacência
+					if (grafoMatriz != null) {
+						boolean conexoMatriz = grafoMatriz.verificarConexidadeMatriz();
+						System.out.println("Grafo conexo (Matriz de Adjacência): " + (conexoMatriz ? "Sim" : "Não"));
+					} else {
+						System.out.println("Matriz de Adjacência não inicializada.");
+					}
 	                break;
 	                
 	            case 7: //Grafo acíclico
@@ -126,6 +146,11 @@ public class Menu_Checagem {
 	                
 	            case 12: //Menor distancia todos x todos Floyd-Warshall
 	                System.out.println("Menor distancia todos x todos");
+					if (grafoMatriz != null) {
+						grafoMatriz.floydWarshall(); // Chama o método Floyd-Warshall da classe Matriz_Adj
+					} else {
+						System.out.println("Matriz de Adjacência não inicializada.");
+					}
 	                break;
 	                
 	            case 0: //Volta para o menu de criação de grafos
