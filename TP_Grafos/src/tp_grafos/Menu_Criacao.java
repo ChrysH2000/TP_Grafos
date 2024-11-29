@@ -23,6 +23,7 @@ public class Menu_Criacao {
             System.out.println("4 - Exibir Grafo (Matriz de Adjacência)");
             System.out.println("5 - Exibir Grafo (Lista de Adjacência)");
             System.out.println("6 - Prosseguir Ao Menu de Checagem");
+            System.out.println("7 - Exibir Graphviz");
             System.out.println("0 - Encerrar o Programa");
             System.out.print("\nEscolha uma opção: ");
             opcao = scanner.nextInt();
@@ -91,7 +92,12 @@ public class Menu_Criacao {
                 case 6: //Exibe o menu de checagem
                 	Menu_Checagem.MenuChecagem(scanner, grafoLista, grafoMatriz);
                 	break;
-                    
+                
+                case 7:
+                    String dotRepresentation = grafoLista.exportarParaGraphviz();
+                    System.out.println(dotRepresentation);
+                    break;
+
                 case 0: //Encerra o programa
                     System.out.println("Programa Encerrado!");
                     break;

@@ -64,6 +64,7 @@ class Lista_Adj {
             System.out.println();
         }
     }
+    
     // Implementação do método verificarAdjacencia
     public boolean verificarAdjacencia(int vertice1, int vertice2) {
         // Verifica se o vértice2 está na lista de adjacências do vértice1
@@ -88,6 +89,7 @@ class Lista_Adj {
         }
         System.out.println();
     }
+    
     //Método para calcular o grau do vértice
     public int calcularGrauVertice(int vertice) {
         if (!listaAdjacencia.containsKey(vertice)) {
@@ -109,6 +111,7 @@ class Lista_Adj {
     }
     return true;
 }
+   
     //Método de Busca em profundidade
     // Inicializar e executar BP para todos os vértices ainda não visitados
     void executarBP() {
@@ -119,6 +122,7 @@ class Lista_Adj {
             }
         }
     }
+    
     // Algoritmo simplificado de Busca em Profundidade (BP)
     public void bp(int v) {
         TD[v] = ++tempo;  //Tempo de descoberta
@@ -161,6 +165,7 @@ class Lista_Adj {
             System.out.println("Não é Euleriano, o grafo possui mais de dois vértices com grau impar");
         }
     }
+    
     // Método auxiliar para verificar se o grafo é conexo
     public boolean ehConexo() {
         // Realizar uma busca em profundidade (BP) a partir de um vértice qualquer
@@ -274,7 +279,9 @@ class Lista_Adj {
         }
     }
 }
-public boolean ehRegular() {
+
+    // Método para verificar se o grafo é regular 
+    public boolean ehRegular() {
     if (listaAdjacencia.isEmpty()) {
         throw new IllegalStateException("O grafo está vazio.");
     }
@@ -291,43 +298,77 @@ public boolean ehRegular() {
 
     return true; // Todos os vértices possuem o mesmo grau
 }
-// Método para verificar se o grafo é acíclico
-public boolean ehAciclico() {
-    boolean[] visitado = new boolean[listaAdjacencia.size()];
-    boolean[] emRecursao = new boolean[listaAdjacencia.size()];
+    
+    // Método para verificar se o grafo é acíclico
+    public boolean ehAciclico() {
+        boolean[] visitado = new boolean[listaAdjacencia.size()];
+        boolean[] emRecursao = new boolean[listaAdjacencia.size()];
 
-    for (int vertice : listaAdjacencia.keySet()) {
-        if (!visitado[vertice]) {
-            if (dfsDetectarCiclo(vertice, -1, visitado, emRecursao)) {
-                return false; // Ciclo encontrado
+        for (int vertice : listaAdjacencia.keySet()) {
+            if (!visitado[vertice]) {
+                if (dfsDetectarCiclo(vertice, -1, visitado, emRecursao)) {
+                    return false; // Ciclo encontrado
+                }
             }
         }
+        return true; // Não há ciclos
     }
-    return true; // Não há ciclos
-}
 
-// Método auxiliar para detectar ciclos usando DFS
-private boolean dfsDetectarCiclo(int vertice, int pai, boolean[] visitado, boolean[] emRecursao) {
-    visitado[vertice] = true;
-    emRecursao[vertice] = true;
+    // Método auxiliar para detectar ciclos usando DFS
+    private boolean dfsDetectarCiclo(int vertice, int pai, boolean[] visitado, boolean[] emRecursao) {
+        visitado[vertice] = true;
+        emRecursao[vertice] = true;
 
-    for (Aresta aresta : listaAdjacencia.get(vertice)) {
-        int vizinho = aresta.destino;
+        for (Aresta aresta : listaAdjacencia.get(vertice)) {
+            int vizinho = aresta.destino;
 
-        if (!visitado[vizinho]) {
-            if (dfsDetectarCiclo(vizinho, vertice, visitado, emRecursao)) {
-                return true; // Ciclo detectado
+            if (!visitado[vizinho]) {
+                if (dfsDetectarCiclo(vizinho, vertice, visitado, emRecursao)) {
+                    return true; // Ciclo detectado
+                }
+            } else if (emRecursao[vizinho] && vizinho != pai) {
+                return true; // Aresta de retorno detectada (ciclo)
             }
-        } else if (emRecursao[vizinho] && vizinho != pai) {
-            return true; // Aresta de retorno detectada (ciclo)
         }
+
+        emRecursao[vertice] = false; // Remove o vértice da pilha de recursão
+        return false;
     }
 
-    emRecursao[vertice] = false; // Remove o vértice da pilha de recursão
-    return false;
-}
-
-
+    // Método para salvar o grafo em imagem e exportar para o Graphviz
+    public String exportarParaGraphviz() {
+        StringBuilder sb = new StringBuilder();
+        boolean isDirected = false; // Mude para 'true' se o grafo for direcionado
+    
+        sb.append(isDirected ? "digraph G {\n" : "graph G {\n");
+        String edgeSymbol = isDirected ? " -> " : " -- ";
+    
+        for (int origem : listaAdjacencia.keySet()) {
+            for (Aresta aresta : listaAdjacencia.get(origem)) {
+                // Evitar duplicar arestas em grafos não direcionados
+                if (!isDirected && origem > aresta.destino) continue;
+                sb.append("    ")
+                    .append(rotulos[origem] != null ? rotulos[origem] : origem)
+                    .append(edgeSymbol)
+                    .append(rotulos[aresta.destino] != null ? rotulos[aresta.destino] : aresta.destino)
+                    .append(" [label=\"").append(aresta.peso).append("\"];\n");
+            }
+        }
+    
+        sb.append("}");
+    
+        String dotRepresentation = sb.toString();
+    
+        // Salvar a representação em arquivo
+        try (java.io.FileWriter writer = new java.io.FileWriter("grafo.dot")) {
+            writer.write(dotRepresentation);
+            System.out.println("Arquivo 'grafo.dot' salvo com sucesso!");
+        } catch (java.io.IOException e) {
+            System.err.println("Erro ao salvar o arquivo: " + e.getMessage());
+        }
+    
+        return dotRepresentation;
+    }
 
 }
 
