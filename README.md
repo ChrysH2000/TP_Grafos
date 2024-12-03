@@ -1,3 +1,9 @@
+## Integrantes
+- Chrystian Henrique Fonseca de Souza;
+- Igor Gomes Silva Rattes;
+- Lucas Bretz Araújo Petinga;
+- Samara Hellen Ferreira Chaves.
+
 ## Metodos 
 * [Menu Criação](TP_Grafos/src/tp_grafos/Menu_Criacao.java)
 * [Menu Checagem](TP_Grafos/src/tp_grafos/Menu_Checagem.java)
